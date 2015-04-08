@@ -1,0 +1,57 @@
+.\"	$OpenBSD: mdoc.template,v 1.15 2014/03/31 00:09:54 dlg Exp $
+.\"
+.\" Copyright (c) 2015 Ian Darwin <ian@openbsd.org>
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.\" The following requests are required for all man pages.
+.\"
+.Dd $Mdocdate$
+.Dt macminifixer 8
+.Os
+.Sh NAME
+.Nm macminifixer
+.Nd configure Mac Mini to auto-boot when power is applied
+.Sh SYNOPSIS
+.Nm program
+.Op Fl abc
+.Ar
+.Sh DESCRIPTION
+The
+.Nm
+utility updates the PCI configuration so that an Intel Macmini3,1 (NVIDIA Chipset)
+will boot automatically when power is applied.
+The default for this model of machine is to require the user to press the power button
+after power is restored; obviously not suitable for remote or server deployment.
+This program changes the setting to boot up automatically.
+.Pp
+The setting is NOT sticky; you must run this program every time your machine is booted,
+so an entry in /etc/rc.securelevel (or another startup file) is mandatory if your machine
+is in remote deployment.
+.Pp
+Note you MUST either run it in securelevel 0 or enable the aperture driver.
+.Pp
+This program is at present ONLY configured for Intel Macmini3,1; use on any other model
+can damage or destroy your machine's configuration.
+USE AT OWN RISK. YOU HAVE BEEN WARNED.
+.Sh EXIT STATUS
+Zero on normal operation, 1 if anything goes wrong.
+.Sh SEE ALSO
+.Xr pciutils 1
+Program that should be able to do this but doesn't correctly cope with OpenBSD's pci driver.
+.Sh HISTORY
+Written in 2015.
+.Sh AUTHORS
+Ian Darwin, with help from a ton of googling.
+.Sh BUGS
+Should not exist - pciutils should work correctly.
