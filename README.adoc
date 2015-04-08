@@ -1,0 +1,24 @@
+= macminifixer
+
+macminifixer will configure an Intel Mac Mini (currntly only Macmini3,1 model) to auto-boot when power is applied
+
+More precisely, it updates the PCI configuration so that an Intel Macmini3,1 (NVIDIA Chipset)
+will do what it should when power is applied, that is, boot up.
+The default for this model of machine is to require the user to press the power button
+after power is restored; obviously not suitable for remote or server deployment.
+This program changes the setting to boot up automatically.
+
+The setting is NOT sticky; you must run this program every time your machine is booted,
+so an entry in /etc/rc.securelevel (or another startup file) is mandatory if your machine
+is in remote deployment.
+
+Note you MUST either run it in securelevel 0 or enable the aperture driver.
+
+This program is at present ONLY configured for Intel Macmini3,1; use on any other model
+can damage or destroy your machine's configuration.
+USE AT OWN RISK. YOU HAVE BEEN WARNED.
+
+Patches to support other models will be welcomed.
+
+The pciutils package (in ports/sysutils/pciutils)
+should be able to do this but doesn't correctly cope with OpenBSD's pci driver.
