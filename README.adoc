@@ -1,6 +1,6 @@
-= macminifixer
+= macsetautoboot
 
-macminifixer will configure an Intel Mac Mini (currntly only Macmini3,1 model) to auto-boot when power is applied
+macsetautoboot will configure an Intel Mac Mini (currntly only Macmini3,1 model) to auto-boot when power is applied
 
 More precisely, it updates the PCI configuration so that an Intel Macmini3,1 (NVIDIA Chipset)
 will do what it should when power is applied, that is, boot up.

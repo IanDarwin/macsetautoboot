@@ -1,7 +1,7 @@
 #	$OpenBSD$
 
-PROG=	macminifixer
+PROG=	macsetautoboot
 
-MAN=    macminifixer.8
+MAN=    macsetautoboot.8
 
 .include <bsd.prog.mk>
