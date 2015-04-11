@@ -2,6 +2,7 @@
 #include <sys/pciio.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <errno.h>
 
 int main(int argc, char **argv) {
 	struct pci_io pcio;
@@ -9,7 +10,10 @@ int main(int argc, char **argv) {
 
 	int fd = open("/dev/pci0", O_RDWR | O_CLOEXEC);
 	if (fd < 0) {
-		perror("open /dev/pci0: try securelevel 0 OR machdep.allowaperture>0");
+		if (errno == EACCES)
+			perror("open /dev/pci0");
+		else
+			perror("open /dev/pci0: try securelevel 0 OR machdep.allowaperture>0");
 		return -1;
 	}
 
