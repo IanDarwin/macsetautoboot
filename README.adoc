@@ -20,5 +20,7 @@ USE AT OWN RISK. YOU HAVE BEEN WARNED.
 
 Patches to support other models will be welcomed.
 
-The pciutils package (in ports/sysutils/pciutils)
-should be able to do this but doesn't correctly cope with OpenBSD's pci driver.
+See also: 
+http://theories.darwinsys.com/View.web?blogId=2015/04/10/1234124320000
+and
+https://www.mythic-beasts.com/support/servers/colo/macmini.
