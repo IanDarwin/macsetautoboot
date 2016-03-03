@@ -17,24 +17,27 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
+	// .. for an Intel Mac Mini
+	// setpci -s 0:1f.0 0xa4.b=0
+	// ... for an NVidia Mac Mini
+	// setpci -s 00:03.0 0x7b.b=0x19
+	// ... for a Unibody Mac Mini
+	// setpci -s 0:3.0 -0x7b=20
+
 	pcisel.pc_bus = 0;
 	pcisel.pc_dev = 3;	/* device on this bus */
 	pcisel.pc_func = 0;	/* function on this device */
 
 	/*
-	pi_sel    A pcisel structure which specifies the bus, slot and
-                       function the user would like to query.
-
-	 pi_reg    The PCI configuration register the user would like to
-                       access.
-
+	 pi_sel - A pcisel structure - specifies the bus, slot and function
+	 pi_reg - The PCI configuration register the user wants to access.
 	 pi_width  The width, in bytes, of the data the user would like to
                        read.  This value can be only 4.
-
 	 pi_data   The data returned by the kernel.
 	*/
 	pcio.pi_sel = pcisel;
 	pcio.pi_reg = 0x78;	/* must be 32-bit aligned */
+	//pcio.pi_reg = 0xa4;	/* must be 32-bit aligned */
 	pcio.pi_width = 4;	/* "This value can only be 4" */
 
 	int ret = ioctl(fd, PCIOCREAD, &pcio);
@@ -42,13 +45,19 @@ int main(int argc, char **argv) {
 		perror("PCIOCREAD");
 		return -1;
 	}
+	int word = htonl(pcio.pi_data);
 
-	printf("read returned %d, data %08x\n", ret, htonl(pcio.pi_data));
+	printf("%d:%d:%d offset 0x%x read ret=%d, data %08x", 
+		pcisel.pc_bus, pcisel.pc_dev, pcisel.pc_func,
+		pcio.pi_reg,
+		ret, word);
 
 	// If we get this far, change pcio_pi_data and write it back.
-	pcio.pi_data = ntohl(htonl(pcio.pi_data & 0x1fffffff));
+	int nword = (word & 0xffffff00) | 0x19;
+	//int nword = word & 0x00ffffff;
+	pcio.pi_data = ntohl(nword);
 
-	printf("About to write updated data %08x\n", htonl(pcio.pi_data));
+	printf("-> %08x\n", nword);
 	ret = ioctl(fd, PCIOCWRITE, &pcio);
 	if (ret < 0) {
 		perror("PCIOCWRITE");
