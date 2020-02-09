@@ -12,6 +12,12 @@ The setting is NOT sticky; you must run this program every time your machine is 
 so an entry in /etc/rc.securelevel (or another startup file) is mandatory if your machine
 is in remote deployment.
 
+Note that this program _may_ fail to cause a reboot on sysupgrade,
+since the upgrade kernel will not automatically run this program.
+
+Note that this program _will_ fail to cause a reboot if the power is up-and-down, and
+takes your machine down during the minute or so between starting a boot and running this program.
+
 Note you MUST either run it in securelevel 0 or enable the aperture driver.
 
 This program is at present ONLY configured for Intel Macmini3,1; use on any other model
